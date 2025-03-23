@@ -1,54 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  token: null,
-  user: null,
+const setStoredUser = (token, user, rememberMe) => {
+  if (rememberMe) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('rememberMe', 'true');
+  } else {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.setItem('rememberMe', 'false');
+  }
 };
 
-// export const loginUser = createAsyncThunk(
-//   "user/loginUser",
-//   async (userCredentials, { rejectWithValue }) => {
-//     try {
-//       const response = await fetch("http://localhost:3001/api/v1/user/login", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(userCredentials),
-//       });
+const getStoredUser = () => {
+  try {
+    return localStorage.getItem('rememberMe') === 'true'
+      ? JSON.parse(localStorage.getItem('user'))
+      : null;
+  } catch (error) {
+    console.error("Erreur de parsing du user depuis localStorage:", error);
+    return null;
+  }
+};
 
-//       if (!response.ok) {
-//         throw new Error("Échec de l'authentification");
-//       }
-
-//       const data = await response.json();
-//       localStorage.setItem("token", data.token);
-//       console.log(data);
-
-//       const token = localStorage.getItem("token");
-
-//       console.log("Token depuis localStorage : ", token);
-
-//       return { user: data.body.user, token: data.token };
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
+const initialState = {
+  token: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('token') : null,
+  user: getStoredUser(),
+};
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.token = action.payload.token;
-      state.user = action.payload.user;
+      const { token, user, rememberMe } = action.payload;
+      state.token = token;
+      state.user = user;
+      setStoredUser(token, user, rememberMe); // 🔹 Stocker les valeurs propres
     },
     logout: (state) => {
       state.token = null;
       state.user = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('rememberMe');
     },
   },
 });
 
 export const { setUser, logout } = userSlice.actions;
-export default userSlice.reducer;
+export const userReducer = userSlice.reducer;
