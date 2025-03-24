@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Account } from "../components/Account";
-import { Footer } from "../components/Footer";
-import { Navbar } from "../components/Navbar";
-import { logout, updateUserProfile } from "../redux/userSlice";
+import { Account } from "../../components/Account/Account";
+import { Footer } from "../../components/Footer/Footer";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { logout, updateUserProfile } from "../../redux/userSlice";
 import "./UserProfile.scss";
 
 export const UserProfile = () => {
@@ -23,7 +23,6 @@ export const UserProfile = () => {
   useEffect(() => {
     const checkAuth = () => {
       if (!token) {
-        console.log("Token non trouvé, redirection vers login...");
         navigate('/user/login');
       }
       setLoading(false);

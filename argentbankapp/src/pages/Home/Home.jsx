@@ -1,10 +1,9 @@
-import '../assets/img/icon-chat.png';
-import iconChat from "../assets/img/icon-chat.png";
-import iconMoney from "../assets/img/icon-money.png";
-import iconSecurity from "../assets/img/icon-security.png";
-import { Feature } from "../components/Feature";
-import { Footer } from '../components/Footer';
-import { Navbar } from "../components/Navbar";
+import iconChat from "../../assets/img/icon-chat.png";
+import iconMoney from "../../assets/img/icon-money.png";
+import iconSecurity from "../../assets/img/icon-security.png";
+import { Feature } from "../../components/Feature/Feature";
+import { Footer } from '../../components/Footer/Footer';
+import { Navbar } from "../../components/Navbar/Navbar";
 import "./Home.scss";
 
 export const Home = () => {

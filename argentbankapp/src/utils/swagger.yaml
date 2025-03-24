@@ -1,0 +1,79 @@
+swagger: '2.0'
+info:
+  title: Transactions API
+  version: '1.0.0'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+
+paths:
+  /transactions:
+    get:
+      summary: Transactions list
+      responses:
+        '200': { description: Success }
+        '401': { description: Not allowed }
+    post:
+      summary: Add transaction
+      parameters:
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionCreate'
+      responses:
+        '201': { description: Created transaction }
+        '400': { description: Invalid datas }
+
+  /transactions/{transactionId}:
+    get:
+      summary: Transaction details
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+      responses:
+        '200': { description: Transaction found }
+        '404': { description: Transaction not found }
+    put:
+      summary: Edit transaction
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      responses:
+        '200': { description: Updates transaction }
+        '400': { description: Invalid datas }
+    delete:
+      summary: Delete transaction
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+      responses:
+        '200': { description: Deleted transaction }
+        '404': { description: Transaction not found }
+
+definitions:
+  TransactionCreate:
+    properties:
+      date: { type: string, format: date }
+      description: { type: string }
+      amount: { type: number }
+      balance: { type: number }
+      type: {type: string }
+      accountId: { type: string }
+      notes: { type: string }
+  TransactionUpdate:
+    properties:
+      category: { type: string }
+      notes: { type: string }

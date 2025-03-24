@@ -2,8 +2,8 @@ import axios from 'axios'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setUser } from '../redux/userSlice'
-import { API_LOGIN_URL, API_PROFILE_URL } from "../utils/api"
+import { setUser } from '../../redux/userSlice'
+import { API_LOGIN_URL, API_PROFILE_URL } from "../../utils/api"
 import "./LoginForm.scss"
 
 export const LoginForm = () => {
@@ -26,7 +26,6 @@ export const LoginForm = () => {
 
       // Récupérer le token de la réponse
       const { token } = response.data.body; // Le token est renvoyé dans la réponse
-      console.log({ token });
 
       //Récupérer les informations de l'utilisateur
       const userResponse = await axios.post(
@@ -36,9 +35,6 @@ export const LoginForm = () => {
       );
 
       const user = userResponse.data.body;
-
-      console.log("Stockage dans Redux avec rememberMe =", rememberMe);
-      console.log("Données envoyées :", { token, user, rememberMe });
 
       // ✅ Stockage dans Redux et éventuellement `localStorage`
       dispatch(setUser({ token, user, rememberMe }));

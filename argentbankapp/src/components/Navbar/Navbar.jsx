@@ -2,7 +2,7 @@ import { faRightFromBracket, faUserCircle } from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../assets/img/argentBankLogo.png';
+import logo from '../../assets/img/argentBankLogo.png';
 import "./Navbar.scss";
 
 export const Navbar = () => {
@@ -24,7 +24,7 @@ export const Navbar = () => {
         {
           location.pathname === "/user/profile" && user ? (
             <div className='navbar__items'>
-              <Link className="navbar__items__item" to="/user/login">
+              <Link className="navbar__items__item" to="/user/profile">
                 <FontAwesomeIcon icon={faUserCircle} color="#2C3E50" className="navbar__items__item--icon" /><span className="navbar__items__item--text">{user.firstName}</span>
               </Link>
               <Link className="navbar__items__item" to="/user/login">
