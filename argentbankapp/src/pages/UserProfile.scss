@@ -1,0 +1,78 @@
+.userProfile {
+
+  &__header {
+    color: #fff;
+    margin-bottom: 2rem;
+  }
+}
+
+.userProfile-edition {
+  &__form {
+    gap: 2rem;
+
+    fieldset {
+      border: none;
+    }
+
+    &__inputs {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1rem;
+
+      @media (max-width: 920px) {
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 480px) {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      & input {
+        width: 180px;
+        height: 4vh;
+        font-size: 1rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        color: #BFCCD6;
+
+        @media (max-width: 480px) {
+          text-align: center;
+        }
+      }
+
+      & input:focus {
+        outline: none;
+        color: black;
+      }
+    }
+
+    &__buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1rem;
+
+      & button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 4vh;
+        color: #6458F5;
+        font-weight: 500;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.edit-button {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}

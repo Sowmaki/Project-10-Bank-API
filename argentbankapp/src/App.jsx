@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom"
-import './App.css'
+import './App.scss'
 import { Erreur } from './pages/Error'
 import { Home } from './pages/Home'
 import { SignIn } from './pages/SignIn'

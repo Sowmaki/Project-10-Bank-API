@@ -3,7 +3,8 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setUser } from '../redux/userSlice'
-import { API_LOGIN_URL, API_PROFILE_URL } from "../services/api"
+import { API_LOGIN_URL, API_PROFILE_URL } from "../utils/api"
+import "./LoginForm.scss"
 
 export const LoginForm = () => {
 
@@ -52,21 +53,21 @@ export const LoginForm = () => {
   };
 
   return (
-    <form action={'POST'} onSubmit={handleLogin}>
-      <div className="input-wrapper">
+    <form className="login-form" action={'POST'} onSubmit={handleLogin}>
+      <div className="login-form__input-wrapper">
         <label htmlFor="username">Username</label>
         <input type="text" id="username" name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
-      <div className="input-wrapper">
+      <div className="login-form__input-wrapper">
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name="passwordInput" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
-      <div className="input-remember">
+      <div className="login-form__input-remember">
         <input type="checkbox" id="remember-me" onChange={() => setRememberMe(!rememberMe)} />
         <label htmlFor="remember-me"
         >Remember me</label>
       </div>
-      <button type="submit" className="sign-in-button">Sign In</button>
+      <button type="submit" className="login-form__sign-in-button">Sign In</button>
     </form>
   )
 }

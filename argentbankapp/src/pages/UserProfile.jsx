@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Account } from "../components/Account";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { logout, updateUserProfile } from "../redux/userSlice";
+import "./UserProfile.scss";
 
 export const UserProfile = () => {
   const navigate = useNavigate()
@@ -59,25 +61,25 @@ export const UserProfile = () => {
   return (
     <>
       <Navbar />
-      {user ? (<main className="main bg-dark">
-        <div className="header">
-          <h1>Welcome back<br />{firstName} {lastName}</h1>
+      {user ? (<main className="userProfile main bg-dark">
+        <div className="userProfile__header">
+          <h1>Welcome back<br />{firstName} {lastName}!</h1>
           {
             !nameEdition ?
               (
-                <div className="account__edition">
+                <div className="userProfile-edition">
                   <button className="edit-button" onClick={() => setNameEdition(!nameEdition)}>Edit Name</button>
                 </div>
               ) : (
-                <div className="account__edition">
-                  <form action="POST" className="account__edition-form">
-                    <fieldset className="account__edition-form__inputs">
+                <div className="userProfile-edition">
+                  <form action="POST" className="userProfile-edition__form">
+                    <fieldset className="userProfile-edition__form__inputs">
                       <input type="text" name="firstname" id="edit-firstname-input" placeholder={user.firstName} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                       <input type="text" name="lastname" id="edit-lastname-input" placeholder={user.lastName} value={lastName} onChange={(e) => setLastName(e.target.value)} />
                     </fieldset>
-                    <div className="account__edition-form__buttons">
-                      <button className="account__edition-form__button" onClick={handleEditName} disabled={isUpdating ? true : false}>Save</button>
-                      <button className="account__edition-form__button" onClick={() => setNameEdition(false)}>Cancel</button>
+                    <div className="userProfile-edition__form__buttons">
+                      <button className="userProfile-edition__form__button button" onClick={handleEditName} disabled={isUpdating ? true : false}>Save</button>
+                      <button className="userProfile-edition__form__button button" onClick={() => setNameEdition(false)}>Cancel</button>
                     </div>
                   </form>
                 </div>
@@ -85,43 +87,15 @@ export const UserProfile = () => {
           }
         </div>
         <h2 className="sr-only">Accounts</h2>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-            <p className="account-amount">$10,928.42</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-            <p className="account-amount">$184.30</p>
-            <p className="account-amount-description">Current Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
+        <div className="accounts-wrapper">
+          <Account title={"Argent Bank Checking (x8349)"} amount={"2,082.79"} amountDescription={"Available Balance"} />
+          <Account title={"Argent Bank Savings (x6712)"} amount={"10,928.42"} amountDescription={"Available Balance"} />
+          <Account title={"Argent Bank Credit Card (x8349)"} amount={"184.30"} amountDescription={"Current Balance"} />
+        </div>
       </main>
       ) : (
         <p>Chargement du profil...</p>
       )}
-
-      <button onClick={handleLogout}>Retourn vers page login</button>
-
       <Footer />
     </>
   )

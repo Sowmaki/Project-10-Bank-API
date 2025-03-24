@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_PROFILE_URL } from "../services/api";
+import { API_PROFILE_URL } from "../utils/api";
 
 
 const setStoredUser = (token, user) => {

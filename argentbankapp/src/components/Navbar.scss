@@ -1,0 +1,59 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    &__image {
+      max-width: 100%;
+      width: 200px;
+    }
+  }
+
+  &__items {
+
+    display: flex;
+    flex-direction: row;
+    gap: 0.8em;
+
+    @media (max-width: 480px) {
+      gap: 0.6em;
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+      margin-right: 0.5rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &--text {
+        font-weight: bold;
+        color: #2c3e50;
+
+        @media (max-width: 480px) {
+          display: none;
+        }
+      }
+
+      &--icon {
+        @media (max-width: 480px) {
+          font-size: 1.5em;
+        }
+      }
+
+      & link.router-link-exact-active {
+        color: #42b983;
+      }
+    }
+  }
+}
