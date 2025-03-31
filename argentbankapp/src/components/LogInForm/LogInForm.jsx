@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setUser } from '../../redux/userSlice'
 import { API_LOGIN_URL, API_PROFILE_URL } from "../../utils/api"
+import { setStoredUser } from '../../utils/storedUser'
 import "./LoginForm.scss"
 
 export const LoginForm = () => {
@@ -38,6 +39,7 @@ export const LoginForm = () => {
 
       // ✅ Stockage dans Redux et éventuellement `localStorage`
       dispatch(setUser({ token, user, rememberMe }));
+      rememberMe && setStoredUser(token, user, rememberMe)
 
       // Rediriger vers la page de profil après connexion
       navigate('/user/profile'); // Redirige vers la page du profil

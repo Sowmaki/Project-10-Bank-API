@@ -1,29 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_PROFILE_URL } from "../utils/api";
-
-
-const setStoredUser = (token, user) => {
-  if (localStorage.getItem('rememberMe') === 'true') {
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-};
-
-const getStoredUser = () => {
-  try {
-    return localStorage.getItem('rememberMe') === 'true'
-      ? JSON.parse(localStorage.getItem('user'))
-      : null;
-  } catch (error) {
-    console.error("Erreur de parsing du user depuis localStorage:", error);
-    return null;
-  }
-};
+import { getStoredUser, setStoredUser } from "../utils/storedUser";
 
 const initialState = {
-  token: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('token') : null,
+  token: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('token') : null,  // ✅ Récupération du token,
   user: getStoredUser(),
 };
+
+// Si je modifie la valeur de token a null, user est récupéré depuis localStorage via getStoredUser()
+// Mais token est toujours null, car il n’est pas récupéré depuis localStorage. ❌
+// Résultat : Redux pense que l’utilisateur est déconnecté et le redirige vers /login.
 
 export const updateUserProfile = createAsyncThunk(
   'user/updateUserProfile',
@@ -59,20 +46,12 @@ const userSlice = createSlice({
       const { token, user, rememberMe } = action.payload;
       state.token = token;
       state.user = user;
-
-      if (rememberMe) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('rememberMe', 'true');
-      }
+      setStoredUser(token, user, rememberMe)
     },
-    logout: (state) => {
+    cleanup: (state) => {
       state.token = null;
       state.user = null;
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('rememberMe');
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -86,5 +65,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, logout } = userSlice.actions;
+export const { setUser, cleanup } = userSlice.actions;
 export const userReducer = userSlice.reducer;

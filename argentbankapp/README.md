@@ -1,12 +1,38 @@
-# React + Vite
+# PHASE 1 : AUTHENTIFICATION DES URTILISATEURS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A user should be able to:
+## 1. Landing Page 
+-	Navigate to the home page (/) 
+-	See all placeholder data from mockup
+## 2.  Login Requirement
+-	Navigate to the login page (/login) 
+-	Fill out credentials 
+-	Login to the back-end API with JWT tokens for authentication 
+-	Successfully navigate to a profile page (/profile)
+## 3. Logout Requirement
+-	See the logout button when logged in 
+-	Click the logout button 
+-	Be returned to the home page (/)
 
-Currently, two official plugins are available:
+After successfully logging in, a user should be able to:
+## 4. Privacy Requirement
+-	See their profile page
+-	See their first name on the profile page
+-	See placeholder bank account information
+## 5. Update Profile Feature
+-	Edit their profile (first name and last name). - [ ] This data should be persisted to the database.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The React app contains an implementation of Redux for state management that:
+## 6. Redux Requirement
+-	a store to manage all of the data
+-	action(s) for sending information
+-	reducer(s) for handling application state changes<br/>
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# PHASE 2 : TRANSACTIONS
+
+Users should be able to:
+- Visualize all their current month transactions, grouped by account
+- Visualize transaction details in another view
+- Add, Delete or Edit informations about the transaction
+

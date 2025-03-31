@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Account } from "../../components/Account/Account";
 import { Footer } from "../../components/Footer/Footer";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { logout, updateUserProfile } from "../../redux/userSlice";
+import { updateUserProfile } from "../../redux/userSlice";
 import "./UserProfile.scss";
 
 export const UserProfile = () => {
@@ -31,12 +31,6 @@ export const UserProfile = () => {
     setTimeout(checkAuth, 200); // Laisse le temps à Redux de charger les valeurs
   }, [token, navigate]);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    alert('Vous allez être déconnecté.e.')
-    navigate('/user/login');
-  };
-
   if (loading) {
     return <p>Chargement...</p>;
   }
@@ -46,7 +40,7 @@ export const UserProfile = () => {
 
     setIsUpdating(true); //Facultatif: permet au bouton save d'être desactivé: GOOD UX PRACTICE!
     try {
-      await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap();
+      await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap()
       // unwrap permet d'’extraire directement la valeur retournée par createAsyncThunk.
       //Si la requête échoue, une erreur est levée (ce qui permet d’aller dans le catch).
       alert("Profil mis à jour avec succès ! 🎉");
