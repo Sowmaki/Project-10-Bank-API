@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Account } from "../../components/Account/Account";
 import { Footer } from "../../components/Footer/Footer";
 import { Navbar } from "../../components/Navbar/Navbar";
@@ -8,41 +7,22 @@ import { updateUserProfile } from "../../redux/userSlice";
 import "./UserProfile.scss";
 
 export const UserProfile = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
-  // Ajout d'un état pour éviter une redirection immédiate
-  const [loading, setLoading] = useState(true);
 
   const [nameEdition, setNameEdition] = useState(false)
   const [firstName, setFirstName] = useState(user?.firstName || '');
   const [lastName, setLastName] = useState(user?.lastName || '');
   const [isUpdating, setIsUpdating] = useState(false)
 
-  useEffect(() => {
-    const checkAuth = () => {
-      if (!token) {
-        navigate('/user/login');
-      }
-      setLoading(false);
-    };
-
-    setTimeout(checkAuth, 200); // Laisse le temps à Redux de charger les valeurs
-  }, [token, navigate]);
-
-  if (loading) {
-    return <p>Chargement...</p>;
-  }
 
   const handleEditName = async (e) => {
     e.preventDefault()
 
-    setIsUpdating(true); //Facultatif: permet au bouton save d'être desactivé: GOOD UX PRACTICE!
+    setIsUpdating(true); //Facultatif: permet au bouton save d'être desactivé.
     try {
       await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap()
-      // unwrap permet d'’extraire directement la valeur retournée par createAsyncThunk.
-      //Si la requête échoue, une erreur est levée (ce qui permet d’aller dans le catch).
       alert("Profil mis à jour avec succès ! 🎉");
     } catch (error) {
       console.error("Erreur de mise à jour :", error);
@@ -63,7 +43,9 @@ export const UserProfile = () => {
                 <div className="userProfile-edition">
                   <button className="edit-button" onClick={() => setNameEdition(!nameEdition)}>Edit Name</button>
                 </div>
-              ) : (
+              )
+              :
+              (
                 <div className="userProfile-edition">
                   <form action="POST" className="userProfile-edition__form">
                     <fieldset className="userProfile-edition__form__inputs">

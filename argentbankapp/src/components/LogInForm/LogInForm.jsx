@@ -19,30 +19,24 @@ export const LoginForm = () => {
     e.preventDefault();
 
     try {
-      // Envoi de la requête POST pour la connexion
-      const response = await axios.post(API_LOGIN_URL, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        API_LOGIN_URL,
+        { email, password });
 
-      // Récupérer le token de la réponse
-      const { token } = response.data.body; // Le token est renvoyé dans la réponse
+      const { token } = response.data.body;
 
-      //Récupérer les informations de l'utilisateur
       const userResponse = await axios.post(
         API_PROFILE_URL,
-        {}, // Pas besoin de body, car les infos sont dans le token
+        {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const user = userResponse.data.body;
 
-      // ✅ Stockage dans Redux et éventuellement `localStorage`
       dispatch(setUser({ token, user, rememberMe }));
       rememberMe && setStoredUser(token, user, rememberMe)
 
-      // Rediriger vers la page de profil après connexion
-      navigate('/user/profile'); // Redirige vers la page du profil
+      navigate('/user/profile');
     } catch (error) {
       console.error('Erreur de connexion:', error);
       alert('Identifiants invalides, veuillez réessayer.');

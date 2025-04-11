@@ -8,12 +8,8 @@ const initialState = {
   user: getStoredUser(),
 };
 
-// Si je modifie la valeur de token a null, user est récupéré depuis localStorage via getStoredUser()
-// Mais token est toujours null, car il n’est pas récupéré depuis localStorage. ❌
-// Résultat : Redux pense que l’utilisateur est déconnecté et le redirige vers /login.
-
 export const updateUserProfile = createAsyncThunk(
-  'user/updateUserProfile',
+  'user/updateUserProfile', //nom de l'action
   async ({ firstName, lastName, token }, { rejectWithValue }) => {
     try {
       if (!firstName || !lastName) {
@@ -22,7 +18,7 @@ export const updateUserProfile = createAsyncThunk(
 
       const response = await axios.put(
         API_PROFILE_URL,
-        { firstName, lastName }, // Vérifie que les données sont bien envoyées
+        { firstName, lastName },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,8 +55,7 @@ const userSlice = createSlice({
         state.user.firstName = action.payload.firstName;
         state.user.lastName = action.payload.lastName;
 
-        // 🔹 Mettre à jour localStorage si rememberMe est activé
-        setStoredUser(state.token, state.user);
+        setStoredUser(state.token, state.user, localStorage.getItem('rememberMe') === 'true');
       });
   },
 });
