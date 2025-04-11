@@ -1,4 +1,4 @@
-# PHASE 1 : AUTHENTIFICATION DES URTILISATEURS
+# PHASE 1 : USERS AUTHENTICATION
 
 A user should be able to:
 ## 1. Landing Page 
